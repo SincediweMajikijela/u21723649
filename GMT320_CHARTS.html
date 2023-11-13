@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Mobility Charts</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Community Mobility Charts</h1>
+
+    <div class="chart-container">
+        <canvas id="barChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="doughnutChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="lineChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="pieChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Data
+        const mobilityData = {
+            retail: {
+                mean: 25.93,
+                min: -45,
+                max: 108,
+                stdDev: 19.35
+            },
+            grocery: {
+                mean: 40.35,
+                min: -35,
+                max: 102,
+                stdDev: 15.91
+            },
+            parks: {
+                mean: 74.41,
+                min: -44,
+                max: 244,
+                stdDev: 60.66
+            },
+            transit: {
+                mean: 48.95,
+                min: -40,
+                max: 341,
+                stdDev: 67.23
+            },
+            workplaces: {
+                mean: 22.98,
+                min: -74,
+                max: 110,
+                stdDev: 27.14
+            },
+            residential: {
+                mean: 13.69,
+                min: 2,
+                max: 35,
+                stdDev: 4.43
+            }
+        };
+
+        // Chart creation function
+        function createChart(id, label, data, type) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: ['Mean', 'Min', 'Max', 'Std Dev'],
+                    datasets: [{
+                        label: label,
+                        data: [data.mean, data.min, data.max, data.stdDev],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create charts
+        createChart('barChart', 'Retail & Recreation', mobilityData.retail, 'bar');
+        createChart('doughnutChart', 'Groceries & Pharmacies', mobilityData.grocery, 'doughnut');
+        createChart('lineChart', 'Parks', mobilityData.parks, 'line');
+        createChart('pieChart', 'Transit Stations', mobilityData.transit, 'pie');
+    </script>
+</body>
+</html>
